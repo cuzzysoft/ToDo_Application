@@ -29,8 +29,12 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            txtid = new Label();
+            completed = new ComboBox();
+            label = new Label();
             panel4 = new Panel();
-            button2 = new Button();
+            btnreset = new Button();
+            btndelete = new Button();
             btnUpdate = new Button();
             btnAdd = new Button();
             label3 = new Label();
@@ -57,6 +61,9 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ActiveCaption;
+            panel1.Controls.Add(txtid);
+            panel1.Controls.Add(completed);
+            panel1.Controls.Add(label);
             panel1.Controls.Add(panel4);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
@@ -70,9 +77,39 @@
             panel1.Size = new Size(1208, 193);
             panel1.TabIndex = 0;
             // 
+            // txtid
+            // 
+            txtid.AutoSize = true;
+            txtid.Location = new Point(880, 155);
+            txtid.Name = "txtid";
+            txtid.Size = new Size(59, 25);
+            txtid.TabIndex = 9;
+            txtid.Text = "label5";
+            txtid.Visible = false;
+            // 
+            // completed
+            // 
+            completed.DropDownStyle = ComboBoxStyle.DropDownList;
+            completed.FormattingEnabled = true;
+            completed.Items.AddRange(new object[] { "NO", "YES" });
+            completed.Location = new Point(865, 92);
+            completed.Name = "completed";
+            completed.Size = new Size(142, 33);
+            completed.TabIndex = 3;
+            // 
+            // label
+            // 
+            label.AutoSize = true;
+            label.Location = new Point(865, 49);
+            label.Name = "label";
+            label.Size = new Size(100, 25);
+            label.TabIndex = 8;
+            label.Text = "Completed";
+            // 
             // panel4
             // 
-            panel4.Controls.Add(button2);
+            panel4.Controls.Add(btnreset);
+            panel4.Controls.Add(btndelete);
             panel4.Controls.Add(btnUpdate);
             panel4.Controls.Add(btnAdd);
             panel4.Dock = DockStyle.Right;
@@ -81,20 +118,31 @@
             panel4.Size = new Size(164, 193);
             panel4.TabIndex = 7;
             // 
-            // button2
+            // btnreset
             // 
-            button2.Location = new Point(15, 133);
-            button2.Name = "button2";
-            button2.Size = new Size(140, 43);
-            button2.TabIndex = 8;
-            button2.Text = "Delete";
-            button2.UseVisualStyleBackColor = true;
+            btnreset.Location = new Point(15, 142);
+            btnreset.Name = "btnreset";
+            btnreset.Size = new Size(137, 34);
+            btnreset.TabIndex = 9;
+            btnreset.Text = "Reset";
+            btnreset.UseVisualStyleBackColor = true;
+            btnreset.Click += btnreset_Click;
+            // 
+            // btndelete
+            // 
+            btndelete.Location = new Point(15, 96);
+            btndelete.Name = "btndelete";
+            btndelete.Size = new Size(140, 37);
+            btndelete.TabIndex = 8;
+            btndelete.Text = "Delete";
+            btndelete.UseVisualStyleBackColor = true;
+            btndelete.Click += button2_Click;
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(15, 72);
+            btnUpdate.Location = new Point(15, 53);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(140, 52);
+            btnUpdate.Size = new Size(140, 37);
             btnUpdate.TabIndex = 7;
             btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = true;
@@ -102,9 +150,9 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(15, 15);
+            btnAdd.Location = new Point(15, 12);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(140, 47);
+            btnAdd.Size = new Size(140, 35);
             btnAdd.TabIndex = 6;
             btnAdd.Text = "Add";
             btnAdd.UseVisualStyleBackColor = true;
@@ -184,6 +232,7 @@
             dvg.RowTemplate.Height = 33;
             dvg.Size = new Size(1202, 388);
             dvg.TabIndex = 0;
+            dvg.CellContentClick += dvg_CellContentClick;
             // 
             // panel3
             // 
@@ -214,7 +263,6 @@
             label4.Size = new Size(68, 25);
             label4.TabIndex = 2;
             label4.Text = "Search:";
-           
             // 
             // comboBox
             // 
@@ -268,12 +316,16 @@
         private TextBox txtTitle;
         private Button btnAdd;
         private Panel panel4;
-        private Button button2;
+        private Button btndelete;
         private Button btnUpdate;
         private Panel panel3;
         private Panel panel5;
         private TextBox textBox1;
         private ComboBox comboBox;
         private Label label4;
+        private ComboBox completed;
+        private Label label;
+        private Label txtid;
+        private Button btnreset;
     }
 }

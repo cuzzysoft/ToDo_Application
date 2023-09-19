@@ -11,6 +11,9 @@ namespace ToDoApp
     {
         DataAccessDb db = new DataAccessDb();
 
+        DataGridViewButtonColumn col_edit;
+        DataGridViewCheckBoxColumn chk;
+
         //usp_todoapp
         public ToDoApp()
         {
@@ -19,10 +22,10 @@ namespace ToDoApp
         private void setColumnSize()
         {
             dvg.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dvg.Columns[0].Width = 100; // Set a fixed width for column 0.
+            dvg.Columns[0].Width = 80; // Set a fixed width for column 0.
 
             dvg.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dvg.Columns[1].Width = 80; // Set a fixed width for column 0.
+            dvg.Columns[1].Width = 100; // Set a fixed width for column 0.
 
             dvg.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dvg.Columns[2].Width = 200; // Set a fixed width for column 0.
@@ -37,12 +40,12 @@ namespace ToDoApp
             dvg.Columns[6].Width = 100; // Set a fixed width for column 0.
 
             comboBox.SelectedIndex = 0;
-
+            completed.SelectedIndex = 0;
         }
         private void ToDoApp_Load(object sender, EventArgs e)
         {
             LoadData();
-            setColumnSize();
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -53,51 +56,30 @@ namespace ToDoApp
         private void btnAdd_Click(object sender, EventArgs e)
         {
             AddData();
-            LoadData();
+            Reset();
         }
         private void LoadData()
         {
-            //DataGridViewCheckBoxColumn chk = new DataGridViewCheckBoxColumn();
-            //chk.Name = "Chk";
-            //chk.HeaderText = "Check";
+            chk = new DataGridViewCheckBoxColumn();
+            chk.Name = "Chk";
+            chk.HeaderText = "Check";
 
-
-
-
-
-            //DataGridViewButtonColumn col_update = new DataGridViewButtonColumn();
-            //col_update.Name = "Edit";
-            //col_update.Text = "Edit";
-            //col_update.UseColumnTextForButtonValue = true;
-            //DataGridViewCellStyle cellStyle = new DataGridViewCellStyle();// Set the background color for the button cells
-            //cellStyle.BackColor = Color.Blue;
-            //col_update.DefaultCellStyle = cellStyle;
-
-
-            //DataGridViewButtonColumn col_delete = new DataGridViewButtonColumn();
-            //col_delete.Name = "Delete";
-            //col_delete.Text = "Delete";
-            //col_delete.UseColumnTextForButtonValue = true;
+            col_edit = new DataGridViewButtonColumn();
+            col_edit.Name = "Edit";
+            col_edit.Text = "Edit";
+            col_edit.UseColumnTextForButtonValue = true;
 
             string sql = "usp_todoapp '','','','','','VIEW'";
             DataSet ds = db.fillDataset(sql);
             dvg.Columns.Clear();
-           // dvg.Columns.Add(chk);
-            //dvg.Columns.Add(col_update);
-
+            dvg.Columns.Add(chk);
             dvg.DataSource = ds.Tables[0];
-           // dvg.Columns.Add(col_update);
+
+            dvg.Columns.Add(col_edit);
+            setColumnSize();
         }
-        private void UpdateData(string _id)
-        {
-            string sql = "usp_todoapp '','','','','','UPDATE'";
-            DataSet ds = db.fillDataset(sql);
-        }
-        private void DeleteData(string _id)
-        {
-            string sql = "usp_todoapp '','','','','','DELETE'";
-            DataSet ds = db.fillDataset(sql);
-        }
+
+
         private void AddData()
         {
             if (txtTitle.Text == "" || txtDescription.Text == "")
@@ -105,19 +87,66 @@ namespace ToDoApp
                 MessageBox.Show("All fields are required");
                 return;
             }
-            string sql = "usp_todoapp '','" + txtTitle.Text + "','" + dateTimePicker.Value + "','N','" + txtDescription.Text + "','ADD'";
+
+            string sql = "usp_todoapp '','" + txtTitle.Text + "','" + dateTimePicker.Value + "','" + completed.SelectedItem.ToString() + "','" + txtDescription.Text + "','ADD'";
             DataSet ds = db.fillDataset(sql);
         }
 
-        private void dvg_CellContentClick(object sender, DataGridViewCellCancelEventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("ok");
+
+            if (txtid.Text == "")
+            {
+                MessageBox.Show("Select record to update");
+                return;
+            }
+            string sql = "usp_todoapp '" + txtid.Text + "','" + txtTitle.Text + "','" + dateTimePicker.Value + "','" + completed.SelectedItem.ToString() + "','" + txtDescription.Text + "','UPDATE'";
+            DataSet ds = db.fillDataset(sql);
+            Reset();
+            MessageBox.Show("Information updated successfully");
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        List<string> checkedIn = new List<string>();
+
+
+        private void dvg_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
             dvg.EndEdit();
             try
             {
-                if (bool.Parse(dvg["chk", e.RowIndex].Value.ToString()) == true)
+                if (e.ColumnIndex == 0)
                 {
-
+                    string? comp = dvg["Chk", e.RowIndex].Value.ToString();
+                    string? id = dvg["Id", e.RowIndex].Value.ToString();
+                    if (comp == "True")
+                    {
+                        checkedIn.Add(id);
+                    }
+                    else
+                    {
+                        if (checkedIn.Contains(id))
+                        {
+                            checkedIn.Remove(id);
+                        }
+                    }
+                }
+                if (e.ColumnIndex == col_edit.Index)
+                {
+                    string? id = dvg["Id", e.RowIndex].Value.ToString();
+                    string? title = dvg["Title", e.RowIndex].Value.ToString();
+                    string? descr = dvg["Description", e.RowIndex].Value.ToString();
+                    string? date = dvg["Date", e.RowIndex].Value.ToString();
+                    string? comp = dvg["Completed", e.RowIndex].Value.ToString();
+                    txtid.Text = id;
+                    txtTitle.Text = title;
+                    txtDescription.Text = descr;
+                    dateTimePicker.Value = DateTime.Parse(date);
+                    completed.SelectedItem = comp;
                 }
             }
             catch (Exception ex)
@@ -126,41 +155,35 @@ namespace ToDoApp
             }
         }
 
-        //private void dvg_SelectionChanged(object sender, EventArgs e)
-        //{
-        //    if (dvg.SelectedRows.Count > 0)
-        //    {
-        //        DataGridViewRow selectedRow = dvg.SelectedRows[0];
-
-        //        // Access cell values using cell indexes or column names
-        //        string column2Value = selectedRow.Cells["Id"].Value.ToString(); // Using column name
-        //        MessageBox.Show(column2Value);
-        //    }
-        //}
-
-
-
-
-
-
-        private void button1_Click(object sender, EventArgs e)
+        private void btnreset_Click(object sender, EventArgs e)
         {
-            if (dvg.SelectedCells.Count > 0)
+            Reset();
+        }
+        private void Reset()
+        {
+            txtDescription.Text = "";
+            txtid.Text = "";
+            txtTitle.Text = "";
+            dateTimePicker.Value = DateTime.Now;
+            LoadData();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (checkedIn.Count == 0)
             {
-                int rowIndex = dvg.SelectedCells[0].RowIndex;
-
-                // Access cell values using cell indexes or column names
-                string column1Value = dvg.Rows[rowIndex].Cells[1].Value.ToString(); // Assuming column 0
-                string column2Value = dvg.Rows[rowIndex].Cells["Id"].Value.ToString(); // Using column name
-                MessageBox.Show(column2Value);
+                MessageBox.Show("Select record(s) to delete");
+                return;
             }
-        }
+            foreach (string element in checkedIn)
+            {
+                string sql = "usp_todoapp '" + element + "','','','','','DELETE'";
+                DataSet ds = db.fillDataset(sql);
+            }
 
-        private void label4_Click(object sender, EventArgs e)
-        {
-
+            Reset();
+            MessageBox.Show("Information deleted successfully");
         }
-   
     }
     public class DataAccessDb
     {
