@@ -220,6 +220,11 @@ namespace ToDoApp
         private void textBox1_Enter(object sender, EventArgs e)
         {
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
     public class DataAccessDb
     {
