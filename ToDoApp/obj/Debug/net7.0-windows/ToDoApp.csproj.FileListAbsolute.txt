@@ -46,3 +46,4 @@ C:\Users\HP\Source\Repos\week-5-task-cuzzysoft\ToDoApp\obj\Debug\net7.0-windows\
 C:\Users\HP\Source\Repos\week-5-task-cuzzysoft\ToDoApp\obj\Debug\net7.0-windows\ToDoApp.pdb
 C:\Users\HP\Source\Repos\week-5-task-cuzzysoft\ToDoApp\obj\Debug\net7.0-windows\ToDoApp.genruntimeconfig.cache
 C:\Users\HP\Source\Repos\week-5-task-cuzzysoft\ToDoApp\obj\Debug\net7.0-windows\ref\ToDoApp.dll
+C:\Users\HP\source\repos\week-5-task-cuzzysoft\ToDoApp\obj\Debug\net7.0-windows\ToDoApp.Properties.Resources.resources

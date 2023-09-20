@@ -2,6 +2,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -44,6 +45,7 @@ namespace ToDoApp
         }
         private void ToDoApp_Load(object sender, EventArgs e)
         {
+
             LoadData();
 
         }
@@ -70,8 +72,9 @@ namespace ToDoApp
             col_edit.UseColumnTextForButtonValue = true;
 
             string sql = "usp_todoapp '','','','','','VIEW'";
-            DataSet ds = db.fillDataset(sql);
+            DataSet ds = DataAccessDb.ExecuteQuery(sql);
             dvg.Columns.Clear();
+
             dvg.Columns.Add(chk);
             dvg.DataSource = ds.Tables[0];
 
@@ -89,7 +92,7 @@ namespace ToDoApp
             }
 
             string sql = "usp_todoapp '','" + txtTitle.Text + "','" + dateTimePicker.Value + "','" + completed.SelectedItem.ToString() + "','" + txtDescription.Text + "','ADD'";
-            DataSet ds = db.fillDataset(sql);
+            DataAccessDb.ExecuteQuery(sql);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -101,7 +104,7 @@ namespace ToDoApp
                 return;
             }
             string sql = "usp_todoapp '" + txtid.Text + "','" + txtTitle.Text + "','" + dateTimePicker.Value + "','" + completed.SelectedItem.ToString() + "','" + txtDescription.Text + "','UPDATE'";
-            DataSet ds = db.fillDataset(sql);
+            DataAccessDb.ExecuteQuery(sql);
             Reset();
             MessageBox.Show("Information updated successfully");
         }
@@ -111,7 +114,7 @@ namespace ToDoApp
 
         }
 
-        List<string> checkedIn = new List<string>();
+        List<string> checkedIDs = new List<string>();
 
 
         private void dvg_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -125,15 +128,16 @@ namespace ToDoApp
                     string? id = dvg["Id", e.RowIndex].Value.ToString();
                     if (comp == "True")
                     {
-                        checkedIn.Add(id);
+                        checkedIDs.Add(id);
                     }
                     else
                     {
-                        if (checkedIn.Contains(id))
+                        if (checkedIDs.Contains(id))
                         {
-                            checkedIn.Remove(id);
+                            checkedIDs.Remove(id);
                         }
                     }
+                    ResetOnly();
                 }
                 if (e.ColumnIndex == col_edit.Index)
                 {
@@ -159,42 +163,77 @@ namespace ToDoApp
         {
             Reset();
         }
-        private void Reset()
+        void ResetOnly()
         {
             txtDescription.Text = "";
             txtid.Text = "";
             txtTitle.Text = "";
             dateTimePicker.Value = DateTime.Now;
+        }
+        private void Reset()
+        {
+            ResetOnly();
+
             LoadData();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (checkedIn.Count == 0)
+            if (checkedIDs.Count == 0)
             {
                 MessageBox.Show("Select record(s) to delete");
                 return;
             }
-            foreach (string element in checkedIn)
+            foreach (string element in checkedIDs)
             {
                 string sql = "usp_todoapp '" + element + "','','','','','DELETE'";
-                DataSet ds = db.fillDataset(sql);
+                DataAccessDb.ExecuteQuery(sql);
             }
 
             Reset();
             MessageBox.Show("Information deleted successfully");
         }
+
+        private void textBox1_KeyUp(object sender, KeyEventArgs e)
+        {
+
+            string search = textBox1.Text;
+            if (search == "")
+            {
+                LoadData();
+            }
+            else
+            {
+                string? search_criteria = comboBox.SelectedIndex == 0 ? "TITLE" : "DATE";
+                string sql = "usp_todoapp '','','','','" + search + "','" + search_criteria + "'";
+                DataSet ds = DataAccessDb.ExecuteQuery(sql);
+                dvg.DataSource = ds.Tables[0];
+            }
+
+        }
+
+        private void textBox1_MouseEnter(object sender, EventArgs e)
+        {
+            textBox1.SelectAll();
+        }
+
+        private void textBox1_Enter(object sender, EventArgs e)
+        {
+        }
     }
     public class DataAccessDb
     {
-        public DataSet fillDataset(string sql)
+        public static SqlConnection sqlConnection = new SqlConnection("Server=localhost\\SQLEXPRESS;Database=ToDoAppDB;Trusted_Connection=True");
+        public static DataSet ExecuteQuery(string sql)
         {
             DataSet dset = new DataSet();
-            SqlConnection sqlConnection = new SqlConnection("Server=localhost\\SQLEXPRESS;Database=ToDoAppDB;Trusted_Connection=True");
             SqlCommand cmd = new SqlCommand(sql, sqlConnection);
             SqlDataAdapter adp = new SqlDataAdapter(cmd);
             adp.Fill(dset);
             return dset;
+            // Assuming your DataSet is named dset and it contains a DataTable named "TableName"
+            // int rowCount = dset.Tables["TableName"].Rows.Count;
+
         }
     }
 

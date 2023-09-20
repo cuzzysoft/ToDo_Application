@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ToDoApp));
             panel1 = new Panel();
             txtid = new Label();
             completed = new ComboBox();
@@ -61,6 +62,8 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ActiveCaption;
+            panel1.BackgroundImage = (Image)resources.GetObject("panel1.BackgroundImage");
+            panel1.BackgroundImageLayout = ImageLayout.Stretch;
             panel1.Controls.Add(txtid);
             panel1.Controls.Add(completed);
             panel1.Controls.Add(label);
@@ -100,7 +103,7 @@
             // label
             // 
             label.AutoSize = true;
-            label.Location = new Point(865, 49);
+            label.Location = new Point(865, 34);
             label.Name = "label";
             label.Size = new Size(100, 25);
             label.TabIndex = 8;
@@ -108,6 +111,7 @@
             // 
             // panel4
             // 
+            panel4.BackgroundImage = (Image)resources.GetObject("panel4.BackgroundImage");
             panel4.Controls.Add(btnreset);
             panel4.Controls.Add(btndelete);
             panel4.Controls.Add(btnUpdate);
@@ -161,7 +165,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(472, 46);
+            label3.Location = new Point(472, 37);
             label3.Name = "label3";
             label3.Size = new Size(49, 25);
             label3.TabIndex = 5;
@@ -188,7 +192,7 @@
             // 
             // dateTimePicker
             // 
-            dateTimePicker.Location = new Point(527, 43);
+            dateTimePicker.Location = new Point(527, 34);
             dateTimePicker.Name = "dateTimePicker";
             dateTimePicker.Size = new Size(300, 31);
             dateTimePicker.TabIndex = 2;
@@ -280,6 +284,9 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(201, 31);
             textBox1.TabIndex = 0;
+            textBox1.Enter += textBox1_Enter;
+            textBox1.KeyUp += textBox1_KeyUp;
+            textBox1.MouseEnter += textBox1_MouseEnter;
             // 
             // ToDoApp
             // 
