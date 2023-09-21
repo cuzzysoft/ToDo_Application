@@ -7,6 +7,7 @@ namespace ToDoApp.Services.Repository
 {
     public class ServiceClass : ConnectionClass
     {
+        //Add data to database
         public static void AddData(ToDoItemModel itemModel)
         {
             string sql = "usp_todoapp '','" + itemModel.Title + "','" + itemModel.Date + "','" + itemModel.Completed + "','" + itemModel.Description + "','ADD'";
@@ -15,12 +16,14 @@ namespace ToDoApp.Services.Repository
 
         public static void UpdateData(ToDoItemModel itemModel)
         {
+            //Update data to database
             string sql = "usp_todoapp '" + itemModel.Id + "','" + itemModel.Title + "','" + itemModel.Date + "','" + itemModel.Completed + "','" + itemModel.Description + "','UPDATE'";
             ExecuteQuery(sql);
         }
 
         public static void DeleteData(List<string> checkedIDs)
         {
+            //Delete all ids passed
             foreach (string id in checkedIDs)
             {
                 string sql = "usp_todoapp '" + id + "','','','','','DELETE'";

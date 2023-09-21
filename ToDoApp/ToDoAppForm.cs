@@ -17,7 +17,7 @@ namespace ToDoApp
         }
         private void setColumnSize()
         {
-            // Set a fixed width for column the desired column.
+            // Set a fixed width for the desired column.
             dvg.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dvg.Columns[0].Width = 80;
 
@@ -61,6 +61,7 @@ namespace ToDoApp
                 MessageBox.Show("All fields are required");
                 return;
             }
+            //Create new ToDoItemModel instance and add to database
             ToDoItemModel itemModel = new ToDoItemModel()
             {
                 Title = txtTitle.Text,
@@ -74,7 +75,7 @@ namespace ToDoApp
        
         private void LoadData(bool firstload)
         {
-            if (firstload)
+            if (firstload)//if loading for the first time
             {
                 //Creating new instance of check button to (DataGridViewCheckBoxColumn)
                 chk = new DataGridViewCheckBoxColumn();
@@ -107,6 +108,7 @@ namespace ToDoApp
                 MessageBox.Show("Select record to update");
                 return;
             }
+            //Create new instance of ToDoItemModel and update with ID
             ToDoItemModel itemModel = new ToDoItemModel()
             {
                 Id = int.Parse(txtid.Text),
@@ -131,6 +133,7 @@ namespace ToDoApp
             {
                 if (e.ColumnIndex == 0)
                 {
+                    //If checkbox is clicked
                     string? comp = dvg["Chk", e.RowIndex].Value.ToString();
                     string? id = dvg["Id", e.RowIndex].Value.ToString();
                     if (comp == "True")
@@ -148,6 +151,7 @@ namespace ToDoApp
                 }
                 if (e.ColumnIndex == col_edit.Index)
                 {
+                    //If update button is clicked
                     string? id = dvg["Id", e.RowIndex].Value.ToString();
                     string? title = dvg["Title", e.RowIndex].Value.ToString();
                     string? descr = dvg["Description", e.RowIndex].Value.ToString();
@@ -193,6 +197,7 @@ namespace ToDoApp
                 MessageBox.Show("Select record(s) to delete");
                 return;
             }
+            //Delete data
             ServiceClass.DeleteData(checkedIDs);
             Reset();
             MessageBox.Show("Information deleted successfully");
