@@ -146,6 +146,30 @@
             "rid": "win"
           }
         }
+      },
+      "ToDoApp.Model/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/ToDoApp.Model.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ToDoApp.Model.dll": {}
+        }
+      },
+      "ToDoApp.Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "System.Data.SqlClient": "4.8.5",
+          "ToDoApp.Model": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/ToDoApp.Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ToDoApp.Services.dll": {}
+        }
       }
     }
   },
@@ -462,11 +486,23 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "ToDoApp.Model/1.0.0": {
+      "type": "project",
+      "path": "../ToDoApp.Model/ToDoApp.Model.csproj",
+      "msbuildProject": "../ToDoApp.Model/ToDoApp.Model.csproj"
+    },
+    "ToDoApp.Services/1.0.0": {
+      "type": "project",
+      "path": "../ToDoApp.Data/ToDoApp.Services.csproj",
+      "msbuildProject": "../ToDoApp.Data/ToDoApp.Services.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0-windows7.0": [
-      "System.Data.SqlClient >= 4.8.5"
+      "System.Data.SqlClient >= 4.8.5",
+      "ToDoApp.Model >= 1.0.0",
+      "ToDoApp.Services >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -495,7 +531,14 @@
       "frameworks": {
         "net7.0-windows7.0": {
           "targetAlias": "net7.0-windows",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\HP\\source\\repos\\week-5-task-cuzzysoft\\ToDoApp.Data\\ToDoApp.Services.csproj": {
+              "projectPath": "C:\\Users\\HP\\source\\repos\\week-5-task-cuzzysoft\\ToDoApp.Data\\ToDoApp.Services.csproj"
+            },
+            "C:\\Users\\HP\\source\\repos\\week-5-task-cuzzysoft\\ToDoApp.Model\\ToDoApp.Model.csproj": {
+              "projectPath": "C:\\Users\\HP\\source\\repos\\week-5-task-cuzzysoft\\ToDoApp.Model\\ToDoApp.Model.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

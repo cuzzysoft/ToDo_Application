@@ -1,0 +1,15 @@
+C:\Users\HP\source\repos\week-5-task-cuzzysoft\ToDoApp.Data\bin\Debug\net7.0\ToDoApp.Services.deps.json
+C:\Users\HP\source\repos\week-5-task-cuzzysoft\ToDoApp.Data\bin\Debug\net7.0\ToDoApp.Services.dll
+C:\Users\HP\source\repos\week-5-task-cuzzysoft\ToDoApp.Data\bin\Debug\net7.0\ToDoApp.Services.pdb
+C:\Users\HP\source\repos\week-5-task-cuzzysoft\ToDoApp.Data\bin\Debug\net7.0\ToDoApp.Model.dll
+C:\Users\HP\source\repos\week-5-task-cuzzysoft\ToDoApp.Data\bin\Debug\net7.0\ToDoApp.Model.pdb
+C:\Users\HP\source\repos\week-5-task-cuzzysoft\ToDoApp.Data\obj\Debug\net7.0\ToDoApp.Services.csproj.AssemblyReference.cache
+C:\Users\HP\source\repos\week-5-task-cuzzysoft\ToDoApp.Data\obj\Debug\net7.0\ToDoApp.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HP\source\repos\week-5-task-cuzzysoft\ToDoApp.Data\obj\Debug\net7.0\ToDoApp.Services.AssemblyInfoInputs.cache
+C:\Users\HP\source\repos\week-5-task-cuzzysoft\ToDoApp.Data\obj\Debug\net7.0\ToDoApp.Services.AssemblyInfo.cs
+C:\Users\HP\source\repos\week-5-task-cuzzysoft\ToDoApp.Data\obj\Debug\net7.0\ToDoApp.Services.csproj.CoreCompileInputs.cache
+C:\Users\HP\source\repos\week-5-task-cuzzysoft\ToDoApp.Data\obj\Debug\net7.0\ToDoApp.Services.csproj.CopyComplete
+C:\Users\HP\source\repos\week-5-task-cuzzysoft\ToDoApp.Data\obj\Debug\net7.0\ToDoApp.Services.dll
+C:\Users\HP\source\repos\week-5-task-cuzzysoft\ToDoApp.Data\obj\Debug\net7.0\refint\ToDoApp.Services.dll
+C:\Users\HP\source\repos\week-5-task-cuzzysoft\ToDoApp.Data\obj\Debug\net7.0\ToDoApp.Services.pdb
+C:\Users\HP\source\repos\week-5-task-cuzzysoft\ToDoApp.Data\obj\Debug\net7.0\ref\ToDoApp.Services.dll

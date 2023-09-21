@@ -113,9 +113,8 @@
             txtid.AutoSize = true;
             txtid.Location = new Point(879, 61);
             txtid.Name = "txtid";
-            txtid.Size = new Size(59, 25);
+            txtid.Size = new Size(0, 25);
             txtid.TabIndex = 9;
-            txtid.Text = "label5";
             txtid.Visible = false;
             // 
             // completed
