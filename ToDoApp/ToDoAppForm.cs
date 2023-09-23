@@ -1,6 +1,7 @@
 using System.Data;
 using ToDoApp.Services.Repository;
 using ToDoApp.Model;
+using ToDoApp.Services.Interface;
 
 namespace ToDoApp
 {
@@ -9,11 +10,12 @@ namespace ToDoApp
 
         DataGridViewButtonColumn col_edit;
         DataGridViewCheckBoxColumn chk;
-
+        IServiceClass service_interface;
         //usp_todoapp
-        public ToDoApp()
+        public ToDoApp(IServiceClass _service_interface)
         {
             InitializeComponent();
+            service_interface = _service_interface;
         }
         private void setColumnSize()
         {
@@ -53,12 +55,12 @@ namespace ToDoApp
         {
             if (txtid.Text != "")
             {
-                MessageBox.Show("Unable to save. Update instead");
+                MessageBox.Show("Unable to save. Update instead", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (txtTitle.Text == "" || txtDescription.Text == "")
             {
-                MessageBox.Show("All fields are required");
+                MessageBox.Show("All fields are required", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             //Create new ToDoItemModel instance and add to database
@@ -69,10 +71,10 @@ namespace ToDoApp
                 Completed = completed.SelectedItem.ToString(),
                 Date = dateTimePicker.Value
             };
-            ServiceClass.AddData(itemModel);
+            service_interface.AddData(itemModel);
             Reset();
         }
-       
+
         private void LoadData(bool firstload)
         {
             if (firstload)//if loading for the first time
@@ -89,7 +91,7 @@ namespace ToDoApp
                 col_edit.UseColumnTextForButtonValue = true;
 
             }
-            DataSet ds = ServiceClass.GetAllRecords();
+            DataSet ds = service_interface.GetAllRecords();
             dvg.Columns.Clear();
             dvg.Columns.Add(chk);
             dvg.DataSource = ds.Tables[0];
@@ -105,9 +107,10 @@ namespace ToDoApp
 
             if (txtid.Text == "")
             {
-                MessageBox.Show("Select record to update");
+                MessageBox.Show("Select record to update", "No record selected",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 return;
             }
+
             //Create new instance of ToDoItemModel and update with ID
             ToDoItemModel itemModel = new ToDoItemModel()
             {
@@ -117,7 +120,7 @@ namespace ToDoApp
                 Completed = completed.SelectedItem.ToString(),
                 Date = dateTimePicker.Value
             };
-            ServiceClass.UpdateData(itemModel);
+            service_interface.UpdateData(itemModel);
             Reset();
             MessageBox.Show("Information updated successfully");
         }
@@ -194,13 +197,18 @@ namespace ToDoApp
         {
             if (checkedIDs.Count == 0)
             {
-                MessageBox.Show("Select record(s) to delete");
+                MessageBox.Show("Select record(s) to delete","No records selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             //Delete data
-            ServiceClass.DeleteData(checkedIDs);
-            Reset();
-            MessageBox.Show("Information deleted successfully");
+            DialogResult d = MessageBox.Show("Do you want to delete the selected records?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (d == DialogResult.Yes)
+            {
+                service_interface.DeleteData(checkedIDs);
+                Reset();
+                MessageBox.Show("Information deleted successfully","Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
         }
 
         private void textBox1_KeyUp(object sender, KeyEventArgs e)
@@ -214,7 +222,7 @@ namespace ToDoApp
             else
             {
                 string? search_criteria = comboBox.SelectedIndex == 0 ? "TITLE" : "DATE";
-                DataSet ds = ServiceClass.Search(search, search_criteria);
+                DataSet ds = service_interface.Search(search, search_criteria);
                 dvg.DataSource = ds.Tables[0];
             }
 

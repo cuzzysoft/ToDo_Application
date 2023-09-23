@@ -1,3 +1,6 @@
+using ToDoApp.Services.Interface;
+using ToDoApp.Services.Repository;
+
 namespace ToDoApp
 {
     internal static class Program
@@ -10,8 +13,10 @@ namespace ToDoApp
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
+
+            IServiceClass service_interface = new ServiceClass();
             ApplicationConfiguration.Initialize();
-            Application.Run(new ToDoApp());
+            Application.Run(new ToDoApp(service_interface));
         }
     }
 }

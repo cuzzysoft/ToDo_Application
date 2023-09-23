@@ -348,6 +348,7 @@
             Controls.Add(panel2);
             Controls.Add(panel1);
             Name = "ToDoApp";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "ToDoApp";
             Load += ToDoApp_Load;
             panel1.ResumeLayout(false);
