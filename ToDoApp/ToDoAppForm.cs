@@ -8,9 +8,9 @@ namespace ToDoApp
     public partial class ToDoApp : Form
     {
 
-        DataGridViewButtonColumn col_edit;
-        DataGridViewCheckBoxColumn chk;
-        IServiceClass service_interface;
+        DataGridViewButtonColumn? col_edit;
+        DataGridViewCheckBoxColumn? chk;
+        IServiceClass service_interface; //Instance of IService interface
         //usp_todoapp
         public ToDoApp(IServiceClass _service_interface)
         {
@@ -98,8 +98,6 @@ namespace ToDoApp
             dvg.Columns.Add(col_edit);
             setColumnSize();
         }
-
-        //Adding data to database
 
 
         private void button1_Click(object sender, EventArgs e)
