@@ -24,7 +24,7 @@ namespace ToDoApp.Services.Repository
 
         public void DeleteData(List<string> checkedIDs)
         {
-            //Delete all ids passed
+            //Delete all ids passed in arguments
             foreach (string id in checkedIDs)
             {
                 string sql = "usp_todoapp '" + id + "','','','','','DELETE'";
@@ -33,19 +33,21 @@ namespace ToDoApp.Services.Repository
 
         }
         public DataSet GetAllRecords()
-        {
+        {//Display all database records
             string sql = "usp_todoapp '','','','','','VIEW'";
             return ExecuteQuery(sql);
         }
 
         public DataSet Search(string search, string search_criteria)
         {
+            //Search for a record
             string sql = "usp_todoapp '','','','','" + search + "','" + search_criteria + "'";
             return ExecuteQuery(sql);
         }
 
         public DataSet ExecuteQuery(string sql)
-        {   //Performing SQL commands and returning dataset
+        {   
+            //Performing SQL commands and returning dataset
             DataSet dset = new DataSet();
             SqlCommand cmd = new SqlCommand(sql, ConnectionClass.sqlConnection);
             SqlDataAdapter adp = new SqlDataAdapter(cmd);

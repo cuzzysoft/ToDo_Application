@@ -14,7 +14,7 @@ namespace ToDoApp
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
 
-            IServiceClass service_interface = new ServiceClass();
+            IServiceClass service_interface = new ServiceClass(); //Instanciating new Instance of ServiceClass for dependency injection
             ApplicationConfiguration.Initialize();
             Application.Run(new ToDoApp(service_interface));
         }

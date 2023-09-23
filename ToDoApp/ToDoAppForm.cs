@@ -11,6 +11,7 @@ namespace ToDoApp
         DataGridViewButtonColumn? col_edit;
         DataGridViewCheckBoxColumn? chk;
         IServiceClass service_interface; //Instance of IService interface
+        List<string> checkedIDs = new List<string>();
         //usp_todoapp
         public ToDoApp(IServiceClass _service_interface)
         {
@@ -122,9 +123,6 @@ namespace ToDoApp
             Reset();
             MessageBox.Show("Information updated successfully");
         }
-
-
-        List<string> checkedIDs = new List<string>();
 
 
         private void dvg_CellContentClick(object sender, DataGridViewCellEventArgs e)
